@@ -1,11 +1,12 @@
 # "THE BEER-WARE LICENSE" (Revision 42):
 # <cmte.igor.almeida@gmail.com> wrote this file. As long as you retain this notice you
 # can do whatever you want with this stuff. If we meet some day, and you think
-# this stuff is worth it, you can buy me a beer in return Igor de Almeida
+# this stuff is worth it, you can buy me a beer in return.
 
 __author__ = 'igor'
 
 from random import random
+
 
 class Solution(object):
     """
@@ -18,6 +19,7 @@ class Solution(object):
     def calculate_fitness(self, fitness_function):
         self.fitness = fitness_function(self.value)
 
+
 def generate_candidate(vector):
     """
     Generates a new candidate solution based on the probability vector
@@ -29,11 +31,13 @@ def generate_candidate(vector):
 
     return Solution(value)
 
+
 def generate_vector(size):
     """
     Initializes a probability vector with given size
     """
     return [0.5] * size
+
 
 def compete(a, b):
     """
@@ -44,6 +48,7 @@ def compete(a, b):
     else:
         return b, a
 
+
 def update_vector(vector, winner, loser, population_size):
     for i in xrange(len(vector)):
         if winner[i] != loser[i]:
@@ -51,6 +56,7 @@ def update_vector(vector, winner, loser, population_size):
                 vector[i] += 1.0 / float(population_size)
             else:
                 vector[i] -= 1.0 / float(population_size)
+
 
 def run(generations, size, population_size, fitness_function):
     # this is the probability for each solution bit be 1
@@ -82,6 +88,8 @@ def run(generations, size, population_size, fitness_function):
         print "generation: %d best value: %s best fitness: %f" % (i + 1, best.value, float(best.fitness))
 
 
+
+
 if __name__ == '__main__':
     f = lambda x: int(x, 2)
-    run(300, 8, 100, f)
+    run(1000, 32, 10, f)
