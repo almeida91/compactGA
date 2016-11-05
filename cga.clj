@@ -16,13 +16,11 @@
 
 (defn update-vector
   [prob-vector winner loser population-size]
-  (loop [final-vector [] remaining-winner winner remaining-loser loser prob prob-vector]
-    (if (= (count prob) 0)
-      final-vector
-      (if (and (not (= (first remaining-winner) (first remaining-loser))) (= (first winner) "1"))
-        (recur (into final-vector [(+ (first prob) (/ 1.0 population-size))]) (rest remaining-winner) (rest remaining-loser) (rest prob))
-        (recur (into final-vector [(- (first prob) (/ 1.0 population-size))]) (rest remaining-winner) (rest remaining-loser) (rest prob))
-        ))))
+  (map (fn [prob win lost]
+         (if (and (not= win lost) (= win "1"))
+           (+ prob (/ 1.0 population-size))
+           (- prob (/ 1.0 population-size))
+           )) prob-vector winner loser))
 
 (defn calculate-fitness
   [fitness-function solution]
