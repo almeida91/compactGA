@@ -1,10 +1,10 @@
 (defn generate-candidate
-  [prob-vector]
-  (let [random (new java.util.Random)]
-    (loop [candidate [] probs prob-vector]
-      (if (empty? probs)
-        (clojure.string/join "" candidate)
-        (recur (into candidate (if (< (. random nextDouble) (first probs)) "1" "0")) (rest probs))))))
+  ([prob-vector] (generate-candidate prob-vector []))
+  ([prob-vector candidate]
+   (if (empty? prob-vector)
+     (clojure.string/join "" candidate)
+     (let [random (new java.util.Random)]
+       (recur (rest prob-vector) (into candidate (if (< (. random nextDouble) (first prob-vector)) "1" "0")))))))
 
 (defn generate-vector [size] (vec (repeat size 0.5)))
 
